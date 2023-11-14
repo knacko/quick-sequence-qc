@@ -1,4 +1,4 @@
-name: raw-read-qc
+name: quick-sequence-qc
 channels:
   - conda-forge
   - bioconda
