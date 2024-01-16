@@ -14,7 +14,7 @@ workflow {
   
   main:
     if (params.illumina) {
-      def grouping = { file -> file.name.lastIndexOf('_L001').with {it != -1 ? file.name[0..<it] : file.name} }
+      def grouping = { file -> file.name.lastIndexOf('_R').with {it != -1 ? file.name[0..<it] : file.name} }
       ch_fastq_input = Channel.fromFilePairs( params.illumina_search_path, flat: true, grouping).map{ it -> [it[0], it.tail()] }
       fastp(ch_fastq_input)
       fastp.out.stats.collectFile(keepHeader: true, sort: { it.text }, name: "${output_prefix}basic_qc_stats.csv", storeDir: "${params.outdir}")
